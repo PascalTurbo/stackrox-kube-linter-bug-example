@@ -1,0 +1,4 @@
+# Default values for chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+commitHash: a8f56e1a04b3cc7eb3f9dba81933fdcaee98dc2e

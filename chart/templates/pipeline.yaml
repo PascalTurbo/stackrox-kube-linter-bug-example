@@ -1,0 +1,32 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: test-pipeline
+spec:
+  params:
+    - name: p_APP_NAME
+      type: string
+      description: The application name
+  workspaces:
+    - name: workspace
+  tasks:
+    - name: git-clone
+      taskRef:
+          resolver: git
+          params:
+          - name: repo
+            value: myrepo
+          - name: revision
+            value: {{ .Values.commitHash }}
+          - name: pathInRepo
+            value: git-clone/0.9/git-clone.yaml
+      workspaces:
+      - name: output
+        workspace: workspace
+      params:
+      - name: url
+        value: "https://dev.azure.com/havdb-labor/havdb/_git/$(params.p_GIT_REPOSITORY)"
+      - name: revision
+        value: $(params.p_GIT_SOURCE_REVISION)
+      - name: deleteExisting
+        value: "true"
